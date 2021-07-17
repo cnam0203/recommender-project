@@ -1,0 +1,84 @@
+{% extends 'dashboard/index.html' %}
+
+{% block container %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/base-dashboard.css' %}">
+    <div class="header">
+        <div class="vertical-div left-header">
+            <a href="/dashboard/home">
+                <img src="{% static '/dashboard/images/logo.svg' %}" id="img-logo"/>
+            </a>
+        </div>
+        <div class="vertical-div center-header">
+                Data Platform and Analytics
+        </div>
+        <div class="right-header">
+            <div class="dropdown-btn vertical-div">staff, {{ user.get_username }}</div>
+            <div class="dropdown-content">
+                <div class="dropdown-li"><a href="#" class="border-bottom vertical-div">Profile</a></div>
+                <div class="dropdown-li"><a href="/authentication/logout" class="vertical-div">Log Out</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div class="center-left">
+            <div class="center-left-outer">
+                <div class="dropdown-menu-container">
+                    <a href="/dashboard/home" class="dropdown-menu-item vertical-div">
+                        <img src="{% static '/dashboard/images/menu.svg' %}" />
+                        <div>Dashboard</div>
+                    </a>
+                </div>
+                <div class="dropdown-menu-container">
+                    <div class="dropdown-menu-item vertical-div" id="table-btn">
+                        <img src="{% static '/dashboard/images/database.svg' %}" />
+                        <div>Database</div>
+                    </div>
+                    <div class="sub-dropdown-menu" id="table-subclass">
+                        <a href="/dashboard/table/action_type">Action type</a>
+                        <a href="/dashboard/table/channel_type">Channel type</a>
+                        <a href="/dashboard/table/device_browser">Device browser</a>
+                        <a href="/dashboard/table/device_category">Device category</a>
+                        <a href="/dashboard/table/device_os">Device os</a>
+                        <a href="/dashboard/table/experience_emotion">Experience emotion</a>
+                        <a href="/dashboard/table/interact_item_type">Interact_Item_Type</a>
+                        <a href="/dashboard/table/journey_customer">Journey customer</a>
+                        <a href="/dashboard/table/matching_column">Mapping file</a>
+                        <a href="/dashboard/table/matching_report">Mapping data source</a>
+                        <a href="/dashboard/table/traffic_source_type">Traffic source type</a>
+                        <a href="/dashboard/table/touchpoint">Touchpoint</a>
+                    </div>
+                </div>
+                <div class="dropdown-menu-container">
+                    <div class="dropdown-menu-item vertical-div" id="analytics-btn">
+                        <img src="{% static '/dashboard/images/analytics.svg' %}" />
+                        <div>Analytics</div>
+                    </div>
+                    <div class="sub-dropdown-menu" id="analytics-subclass">
+                        <a href="/graph_model/analytics/visualize-process-graph" >Visualize journey</a>
+                        <a href="/graph_model/analytics/trace-clustering" >Trace clustering</a>
+                        <a href="/graph_model/analytics/decision-mining" >Decision mining</a>
+                    </div>
+                </div>
+                <div class="dropdown-menu-container">
+                    <a href="/dashboard/report" class="dropdown-menu-item vertical-div">
+                        <img src="{% static '/dashboard/images/pie-chart.svg' %}" />
+                        <div>Report</div>
+                    </a>
+                </div>
+                <div class="dropdown-menu-container">
+                    <a href="/dashboard/documentation" class="dropdown-menu-item vertical-div">
+                        <img src="{% static '/dashboard/images/copy.svg' %}" />
+                        <div>Documentation</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="center-right">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="footer"></div>
+    <script  type="text/javascript" src="{% static '/dashboard/js/base-dashboard.js' %}"></script> 
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'dashboard/base-dashboard.html' %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/home.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <div class="center-content">
+        <div class="activity-user">
+            <div class="activity-table">
+                <p class="table-name">Recent Activity</p>
+                <div class="table-container">
+                    <div class="table-header">
+                        <div>CustomerID</div>
+                        <div>Visit Time </div>
+                        <div>Action</div>
+                        <div>Channel</div>
+                        <div>Device</div>
+                        <div>Experience</div>
+                    </div>
+                    {% for activity in activities %}
+                        <div class="table-row">
+                            <div class="table-column">{{ activity.customer_id }}</div>
+                            <div class="table-column">{{ activity.time }}</div>
+                            <div class="table-column">{{ activity.action }}</div>
+                            <div class="table-column">{{ activity.channel }}</div>
+                            <div class="table-column">{{ activity.device }}</div>
+                            <div class="table-column">{{ activity.experience }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="number-user">
+                <div class="number-user-container"  id="number-user-above">
+                    <p>{{ total_customer }}</p>
+                    <p>Total customers</p>
+                </div>
+                <div class="number-user-container">
+                    <p>{{ new_customer }}</p>
+                    <p>New daily customers</p>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container">
+            <div class="chart">
+                <p class="chart-name">Action Type</p>
+                <div id="action-chart"></div>
+            </div>
+            <div class="chart" style="color: #EA3939">
+                <p class="chart-name">Channel</p>
+                <div id="channel-chart"></div>
+            </div>
+            <div class="chart">
+                <p class="chart-name">Device</p>
+                <div id="device-chart"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var reports = JSON.parse("{{reports|escapejs}}");
+
+        reports.map((chart, index) => {
+            console.log(chart)
+            Highcharts.chart(chart.id, {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: chart.title
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Number'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [
+                    {
+                        name: "",
+                        colorByPoint: true,
+                        data: chart.data
+                    }
+                ]
+            })
+        })
+
+    </script>
+{% endblock %}
